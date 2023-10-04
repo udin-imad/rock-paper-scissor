@@ -6,3 +6,4 @@ Rock, paper, scissors (also known as Rochambeau, Roshambo, or Janken) is a fun a
 
 ## Note
 * This is part of The Odin Project Practice
+* You can only see the result in the browser console for now
