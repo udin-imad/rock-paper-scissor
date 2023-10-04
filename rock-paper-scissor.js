@@ -9,17 +9,20 @@ function playRound(playerSelection, computerSelection) {
         || playerSelection.toUpperCase() === 'SCISSOR' && computerSelection === 'PAPER'
         || playerSelection.toUpperCase() === 'PAPER' && computerSelection === 'ROCK') {
 
-            return(`You Win! ${playerSelection.toUpperCase()} beats ${computerSelection}`);
+            return(`Computer choose ${computerSelection}\nYou Win! ${playerSelection.toUpperCase()} beats ${computerSelection}`);
 
         } else if (playerSelection.toUpperCase() === 'ROCK' && computerSelection === 'PAPER'
         || playerSelection.toUpperCase() === 'SCISSOR' && computerSelection === 'ROCK'
         || playerSelection.toUpperCase() === 'PAPER' && computerSelection === 'SCISSOR') {
 
-            return(`You Lose! ${computerSelection} beats ${playerSelection.toUpperCase()}`);
+            return(`Computer choose ${computerSelection}\nYou Lose! ${computerSelection} beats ${playerSelection.toUpperCase()}`);
 
         } else {
             return('TIED');
         }
 };
 
+const playerSelection = prompt('Input your choices between\nROCK, PAPER or SCISSOR to play', '');
+const result = playRound(playerSelection, getComputerChoice());
+console.log(result);
 
