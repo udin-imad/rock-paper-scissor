@@ -1,3 +1,17 @@
+const player = document.querySelector('#player-score');
+const computer = document.querySelector('#computer-score');
+const result = document.querySelector('#result');
+const winner = document.querySelector('#winner');
+const reset = document.querySelector('#reset');
+const buttons = document.querySelectorAll('.button button');
+
+let playerScore = 0;
+let computerScore = 0;
+let gameRound = 5;
+
+player.textContent = playerScore;
+computer.textContent = computerScore;
+
 function getComputerChoice() {
     const array = ['ROCK', 'PAPER', 'SCISSOR'];
     const random = Math.floor(Math.random() * array.length)
@@ -5,24 +19,51 @@ function getComputerChoice() {
 };
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection.toUpperCase() === 'ROCK' && computerSelection === 'SCISSOR'
-        || playerSelection.toUpperCase() === 'SCISSOR' && computerSelection === 'PAPER'
-        || playerSelection.toUpperCase() === 'PAPER' && computerSelection === 'ROCK') {
+    if (playerSelection === 'ROCK' && computerSelection === 'SCISSOR'
+        || playerSelection === 'SCISSOR' && computerSelection === 'PAPER'
+        || playerSelection === 'PAPER' && computerSelection === 'ROCK') {
+            playerScore++
+            return (`Computer choose ${computerSelection}\nYou Win! ${playerSelection} beats ${computerSelection}`);
 
-            return(`Computer choose ${computerSelection}\nYou Win! ${playerSelection.toUpperCase()} beats ${computerSelection}`);
-
-        } else if (playerSelection.toUpperCase() === 'ROCK' && computerSelection === 'PAPER'
-        || playerSelection.toUpperCase() === 'SCISSOR' && computerSelection === 'ROCK'
-        || playerSelection.toUpperCase() === 'PAPER' && computerSelection === 'SCISSOR') {
-
-            return(`Computer choose ${computerSelection}\nYou Lose! ${computerSelection} beats ${playerSelection.toUpperCase()}`);
+        } else if (playerSelection === 'ROCK' && computerSelection === 'PAPER'
+        || playerSelection === 'SCISSOR' && computerSelection === 'ROCK'
+        || playerSelection === 'PAPER' && computerSelection === 'SCISSOR') {
+            computerScore++
+            return (`Computer choose ${computerSelection}\nYou Lose! ${computerSelection} beats ${playerSelection}`);
 
         } else {
-            return('TIED');
+            return (`Computer choose ${computerSelection} you choose ${playerSelection} TIED`);
         }
 };
 
-const playerSelection = prompt('Input your choices between\nROCK, PAPER or SCISSOR to play', '');
-const result = playRound(playerSelection, getComputerChoice());
-console.log(result);
+function score() {
+    if (gameRound <= 0 && playerScore > computerScore) {
+        winner.textContent = 'YOU WIN!!!';
+    } else if (gameRound <= 0 && computerScore > playerScore) {
+        winner.textContent = 'YOU LOSE!!!';
+    } else if (gameRound <= 0 && computerScore === playerScore) {
+        winner.textContent = 'TIED';
+    };
+};
 
+function game() {
+    result.textContent = playRound(playerSelection, getComputerChoice());
+    player.textContent = playerScore;
+    computer.textContent = computerScore; 
+};
+
+function round() {
+    gameRound--;
+    score();
+    if ( gameRound >= 0 ) {
+        console.log(gameRound);
+        return game();
+    }   else {
+        return;
+    }
+}
+
+buttons.forEach((btn) => {
+    playerSelection = btn.id;
+    btn.addEventListener('click', round);
+});
